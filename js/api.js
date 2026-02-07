@@ -5,7 +5,7 @@
  * IMPORTANTE: Cambiar GAS_URL por tu URL de Web App
  */
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwQF1r4stXRu8Y1x9W6vcRW6SZbZFas4LvKmRIUXtSo01Icq3X1urvBD1R78Dm5IPGR/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzBqi0sxS4uNFYRofiEz5vb3lDPVTZQtXjeMDLZCwGnK3WUmLrhyoc55e288qcOszXf/exec';
 
 const API = {
   async call(action, data = {}) {
