@@ -1,87 +1,10 @@
 /**
  * AluminioRD Pro - Main Application
  * SPA con routing por hash, auth con PIN, y modulos CRUD
+ * Depende de: api.js (API), calculos.js (PRODUCTOS, COLORES_PERFIL, calcularElemento, calcularPrecio, calcularTotales, formatMonto)
  */
 
-const API = {
-  login: async (hash) => {
-    // Simulated API response
-    return { success: true, usuario: { nombre: 'John Doe', rol: 'Admin' } };
-  },
-  getStats: async () => {
-    // Simulated API response
-    return { success: true, data: { total_mes: 100000, cotizaciones_activas: 50, tasa_conversion: 80, m2_vendidos: 200, total_mes_cambio: 10, cotizaciones_cambio: 5 } };
-  },
-  getClientes: async () => {
-    // Simulated API response
-    return { success: true, data: [{ id: 1, nombre: 'Cliente 1', telefono: '1234567890', email: 'cliente1@example.com', cedula: '123456789', direccion: 'Direccion 1', ciudad: 'Ciudad 1', sector: 'Sector 1', tipo_persona: 'fisica', tipo_cliente: 'retail', notas: 'Notas 1' }] };
-  },
-  guardarCliente: async (data) => {
-    // Simulated API response
-    return { success: true };
-  },
-  eliminarCliente: async (id) => {
-    // Simulated API response
-    return { success: true };
-  },
-  getCotizaciones: async () => {
-    // Simulated API response
-    return { success: true, data: [{ id: 1, numero: 'COT-001', cliente: { id: 1, nombre: 'Cliente 1' }, proyecto: 'Proyecto 1', estado: 'borrador', total: 50000 }] };
-  },
-  guardarCotizacion: async (data) => {
-    // Simulated API response
-    return { success: true };
-  },
-  getPagos: async () => {
-    // Simulated API response
-    return { success: true, data: [{ id: 1, cotizacion_id: 1, monto: 50000, fecha: '2023-10-01', metodo: 'efectivo', referencia: 'REF-001', notas: 'Notas 1' }] };
-  },
-  guardarPago: async (data) => {
-    // Simulated API response
-    return { success: true };
-  },
-  getEventos: async (fi, ff) => {
-    // Simulated API response
-    return { success: true, data: [{ id: 1, titulo: 'Evento 1', tipo: 'medicion', fecha: '2023-10-01', hora_inicio: '09:00', hora_fin: '10:00', direccion: 'Direccion 1', notas: 'Notas 1' }] };
-  },
-  guardarEvento: async (data) => {
-    // Simulated API response
-    return { success: true };
-  }
-};
-
-const PRODUCTOS = {
-  ventana_corrediza_2h: {
-    nombre: 'Ventana Corrediza 2h',
-    sistemas: ['Serie 400'],
-    vidrios: ['6mm templado']
-  }
-};
-
-const COLORES_PERFIL = ['Blanco', 'Negro'];
-
-const calcularElemento = (tipo, ancho, alto, sistema) => {
-  return { m2: ancho * alto / 10000, totalMetros: 10, m2Vidrio: 5, cortes: [{ pieza: 'Perfil 1', long: 100, cant: 2, perfil: 'Perfil 1' }] };
-};
-
-const calcularPrecio = (tipo, calc, sistema, vidrio, cantidad) => {
-  return { unitario: 1000, total: calc.m2 * cantidad * 1000, perfiles: 500, vidrios: 300, accesorios: 200 };
-};
-
-const calcularTotales = (elems, inst, desc) => {
-  const subtotalMateriales = elems.reduce((s, e) => s + e.precio_total, 0);
-  const instalacion = inst ? 10000 : 0;
-  const baseImponible = subtotalMateriales + instalacion;
-  const itbis = baseImponible * 0.18;
-  const descuento = baseImponible * (desc / 100);
-  const total = baseImponible - descuento + itbis;
-  const totalM2 = elems.reduce((s, e) => s + e.m2, 0);
-  return { subtotalMateriales, instalacion, descuento, baseImponible, itbis, total, totalM2 };
-};
-
-const formatMonto = (monto) => {
-  return monto.toLocaleString('es-DO', { style: 'currency', currency: 'DOP' }).replace('RD$', '');
-};
+/* global API, PRODUCTOS, COLORES_PERFIL, calcularElemento, calcularPrecio, calcularTotales, formatMonto */
 
 const App = {
   user: null,
